@@ -1,0 +1,56 @@
+<html>
+	<head>
+    <meta charset="utf-8"></meta>
+    <title>文件上传</title>
+    
+	</head>
+<body>
+<h1>文件上传</h1>
+	<form name="editform" id="editform"
+          method="post" enctype="multipart/form-data" >
+		<input id="file" name="file" type="file"/>
+		<input type="reset" value="重置"/>
+        <!-- <input type="submit" value="提交"/> -->
+    </form>
+	<img id="image" src=""></img>
+<script th:src="@{/jquery-2.1.4.js}"></script>
+
+<script>
+    $(document).ready(function () {
+
+        // 上传视频
+        $("#file").on("change", function () {
+            var fil = this.files;
+            var formData = new FormData();
+            //formData.append("newsId", "143290090");
+            //formData.append("type", "video");
+            formData.append("file", fil[0]);
+            $.ajax({
+                //method : "POST",
+                url: "http://192.168.1.158:9000/fdfs/fileUpload",
+                //datatype : "json",
+                type: 'post',
+                //dataType:'JSONP',  // 处理Ajax跨域问题
+                cache: false,
+                data: formData,
+                processData: false,  // 告诉jQuery不要去处理发送的数据
+                contentType: false,  // 告诉jQuery不要去设置Content-Type请求头
+                success: function (data) {
+                    console.log(data);
+                    var code = data.code;
+                    console.log(code);
+                    if(code == 200) {
+                        document.getElementById("image").src="http://192.168.1.158:9000/fdfs/fileDownload?url=" + data.data;
+					} else {
+                        alert(data.msg);
+					}
+                }
+            });
+        });
+
+    });
+</script>
+
+</body>
+</html>
+
