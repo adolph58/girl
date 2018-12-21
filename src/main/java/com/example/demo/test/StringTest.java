@@ -9,5 +9,6 @@ public class StringTest {
         String url = "/group10000/M00/00/00/wKgBmVvvAJCAFInlAAf_HaPmcQM241.jpg";
         String groupName = url.substring(1, url.substring(1).indexOf("/") + 1);
         String remoteFilename = url.split(groupName + "/")[1];
+        System.out.println(remoteFilename);
     }
 }
